@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.tecnologico.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_crear"
+        android:name="com.example.tecnologico.ui.crear.CrearFragment"
+        android:label="@string/menu_crear"
+        tools:layout="@layout/fragment_crear" />
+
+    <fragment
+        android:id="@+id/nav_buscar"
+        android:name="com.example.tecnologico.ui.busqueda.BuscarFragment"
+        android:label="@string/menu_buscar"
+        tools:layout="@layout/fragment_buscar" />
+
+    <fragment
+        android:id="@+id/nav_editar"
+        android:name="com.example.tecnologico.ui.editar.EditarFragment"
+        android:label="Editar"
+        tools:layout="@layout/fragment_editar"/>
+
+    <fragment
+        android:id="@+id/nav_eliminar"
+        android:name="com.example.tecnologico.ui.eliminar.EliminarFragment"
+        android:label="Eliminar"
+        tools:layout="@layout/fragment_eliminar"/>
+
+    <fragment
+        android:id="@+id/nav_listara"
+        android:name="com.example.tecnologico.ui.listara.ListarActivosFragment"
+        android:label="Listar Activos"
+        tools:layout="@layout/fragment_listaa"/>
+
+    <fragment
+        android:id="@+id/nav_listari"
+        android:name="com.example.tecnologico.ui.listari.ListaiFragment"
+        android:label="Listar Inactivos"
+        tools:layout="@layout/fragment_listai"/>
+
+    <fragment
+        android:id="@+id/nav_creditos"
+        android:name="com.example.tecnologico.ui.creditos.CreditosFragment"
+        android:label="Creditos"
+        tools:layout="@layout/fragment_creditos"/>
+</navigation>
