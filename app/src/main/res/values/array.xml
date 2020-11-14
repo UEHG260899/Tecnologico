@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="genero">
+        <item>Seleccione un genero</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+
+    <string-array name="carrera">
+        <item>Seleccione una carrera</item>
+        <item>T.I.Cs</item>
+        <item>Sistemas</item>
+        <item>Electronica</item>
+        <item>Mecatronica</item>
+        <item>Gestion</item>
+    </string-array>
+
+    <string-array name="estatus">
+        <item>Seleccione el status</item>
+        <item>Activo</item>
+        <item>Inactivo</item>
+    </string-array>
+
+</resources>
