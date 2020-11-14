@@ -1,6 +1,7 @@
 package com.example.tecnologico.ui.listara;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 public class ListarActivosFragment extends Fragment {
 
     ArrayList<String> registros, imagenes;
+    ArrayList<Integer> ids;
     private ListarActivosViewModel listarActivosViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +55,7 @@ public class ListarActivosFragment extends Fragment {
 
         Cursor cursor = sqLite.getRegistros("Activo");
 
+        ids = sqLite.getID(cursor);
         registros = sqLite.getAlumnos(cursor);
         imagenes = sqLite.getImagenes(cursor);
 
@@ -70,6 +73,12 @@ public class ListarActivosFragment extends Fragment {
                 dialogo.setTitle("Alumno");
                 dialogo.setView(dialogView);
                 dialogo.setPositiveButton("Aceptar", null);
+                dialogo.setNegativeButton("Baja temporal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        bajaAlumno(ids.get(position), sqLite, root);
+                    }
+                });
                 dialogo.show();
             }
         });
@@ -77,6 +86,17 @@ public class ListarActivosFragment extends Fragment {
 
 
         return root;
+    }
+
+    private void bajaAlumno(int noctrl, SQLite sqLite, View root){
+        String resultado = sqLite.updateStatus(noctrl);
+        Toast.makeText(getContext(), resultado, Toast.LENGTH_LONG).show();
+        ListView list = root.findViewById(R.id.lvListaAct);
+        Cursor cursor = sqLite.getRegistros("Activo");
+        registros = sqLite.getAlumnos(cursor);
+        imagenes = sqLite.getImagenes(cursor);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, registros);
+        list.setAdapter(adapter);
     }
 
 
