@@ -91,15 +91,14 @@ public class SQLite {
         return ListData;
     }
 
-    public ArrayList<String> getID(Cursor cursor){
-        ArrayList<String> ListData = new ArrayList<>();
-        String item = "";
+    public ArrayList<Integer> getID(Cursor cursor){
+        ArrayList<Integer> ListData = new ArrayList<>();
+        int item;
 
         if(cursor.moveToFirst()){
             do{
-                item += "NOCTRL: [" + cursor.getString(0) + "]\r\n";
+                item =  Integer.parseInt(cursor.getString(0));
                 ListData.add(item);
-                item = "";
             }while(cursor.moveToNext());
         }
 
@@ -139,6 +138,20 @@ public class SQLite {
             return "Alumno dado de baja";
         }else{
             return "Error en la baja del alumno";
+        }
+    }
+
+    //Método que activa de nuevo al alumno
+    public String updateActivo(int noctrl){
+        ContentValues cv = new ContentValues();
+        cv .put("STATUS", "Activo");
+
+        int valor = database.update("ALUMNOS", cv, "NOCTRL = " + noctrl, null);
+
+        if(valor == 1){
+            return "Alumno activado de manera exitosa";
+        }else{
+            return "Error al activar alumno";
         }
     }
 

@@ -1,9 +1,11 @@
 package com.example.tecnologico.ui.listari;
 
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 public class ListaiFragment extends Fragment {
 
     ArrayList<String> registros, imagenes;
+    ArrayList<Integer> ids;
     private ListaiViewModel mViewModel;
 
     public static ListaiFragment newInstance() {
@@ -51,6 +54,7 @@ public class ListaiFragment extends Fragment {
 
         Cursor cursor = sqLite.getRegistros("Inactivo");
 
+        ids = sqLite.getID(cursor);
         registros = sqLite.getAlumnos(cursor);
         imagenes = sqLite.getImagenes(cursor);
 
@@ -68,10 +72,15 @@ public class ListaiFragment extends Fragment {
                 dialogo.setTitle("Alumno");
                 dialogo.setView(dialogView);
                 dialogo.setPositiveButton("Aceptar", null);
+                dialogo.setNegativeButton("Dar de alta", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        altaAlumno(ids.get(position), sqLite, root);
+                    }
+                });
                 dialogo.show();
             }
         });
-
         return root;
     }
 
@@ -82,6 +91,18 @@ public class ListaiFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+
+    private void altaAlumno(int noctrl, SQLite sqLite, View root){
+        String resultado = sqLite.updateActivo(noctrl);
+        Toast.makeText(getContext(), resultado, Toast.LENGTH_LONG).show();
+        //se vuelve a cargar el adaptador
+        ListView list = root.findViewById(R.id.lvListaIn);
+        Cursor cursor = sqLite.getRegistros("Inactivo");
+        registros = sqLite.getAlumnos(cursor);
+        imagenes = sqLite.getImagenes(cursor);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, registros);
+        list.setAdapter(adapter);
+    }
 
     public void cargaImagen(String imagen, ImageView iv){
         try {
