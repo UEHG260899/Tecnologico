@@ -15,4 +15,52 @@
     <string name="menu_lista_act">Listar Activos</string>
     <string name="menu_lista_in">Listar Inactivos</string>
     <string name="menu_cred">Creditos</string>
+
+
+    <!--Fragment crear-->
+    <string name="titulo_crear">Ingresar nuevo estudiante</string>
+    <string name="desc_iv">Foto alumno</string>
+    <string name="noCtrl_ma">No. Control</string>
+    <string name="nom_na">Nuevo alumno</string>
+    <string name="fecha_na">Fecha de inscripción</string>
+    <string name="edad_na">Edad</string>
+    <string name="sexo_na">Sexo</string>
+    <string name="carrera_na">Carrera</string>
+    <string name="limpiar_na">Limpiar</string>
+    <string name="guarda_na">Guardar</string>
+
+
+    <!--Fragment Buscar-->
+    <string name="nombre">Nombre del Alumno</string>
+    <string name="noCtrol">No. de Control</string>
+    <string name="fecha_inc">Fecha de Inscripción</string>
+    <string name="edad">Edad</string>
+    <string name="sexo">Sexo</string>
+    <string name="carrera">Carrera</string>
+    <string name="status">Estatus</string>
+    <string name="titulo_busc">Busqueda de Alumnos</string>
+    <string name="buscar">Buscar</string>
+
+    <!--Fragment Editar-->
+    <string name="titulo_ed">Editar Alumno</string>
+
+    <!--Fragment Eliminar-->
+    <string name="titulo_eliminar">Eliminar alumno</string>
+    <string name="eliminar">Baja definitiva</string>
+    <string name="baja_temp">Baja Temporal</string>
+
+    <!--Fragment Listar Activos-->
+    <string name="titulo_lact">Listar alumnos Activos</string>
+
+    <!--Fragment Listar inactivos-->
+    <string name="titulo_lin">Listar alumnos Inactivos</string>
+
+    <!--Fragment Créditos-->
+    <string name="titulo_cred">Créditos de la aplicación</string>
+    <string name="escuela">Instituto Tecnológico de Toluca</string>
+    <string name="materia">Desarrollo de Aplicaciones Móviles</string>
+    <string name="profesora">M.C.C Rocío Elizabeth Pulido Alba</string>
+    <string name="alumno">Uriel Enrique Hernández González</string>
+    <string name="fecha">18 de Noviembre de 2020</string>
+
 </resources>

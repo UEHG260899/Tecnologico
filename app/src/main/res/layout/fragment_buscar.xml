@@ -1,13 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.busqueda.BuscarFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/titulo_busc"
+            android:textSize="30sp" />
+
+
+        <ImageView
+            android:id="@+id/ivFotoBusc"
+            android:layout_width="196dp"
+            android:layout_height="171dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/desc_iv"
+            app:srcCompat="@drawable/ic_menu_camera" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="245dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:hint="@string/noCtrol">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tIETNoctrlb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnBuscarb"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="@string/buscar"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNombreb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/nombre"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvEdadb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/edad"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvSexoB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/sexo"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvFechab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/fecha_inc"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvCarrerab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/carrera"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvStatusb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textPersonName"
+            android:text="@string/status"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+</ScrollView>
