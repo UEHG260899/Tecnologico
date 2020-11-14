@@ -138,7 +138,7 @@ public class SQLite {
         if(valor == 1){
             return "Alumno dado de baja";
         }else{
-            return "Error en la eliminación";
+            return "Error en la baja del alumno";
         }
     }
 
@@ -150,7 +150,7 @@ public class SQLite {
 
     //método de eliminacion
     public int eliminar(Editable noctrl){
-        return database.delete("ALUMNOS", "ID = "+ noctrl, null);
+        return database.delete("ALUMNOS", "NOCTRL = "+ noctrl, null);
     }
 
 

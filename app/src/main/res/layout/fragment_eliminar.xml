@@ -21,7 +21,7 @@
 
 
         <ImageView
-            android:id="@+id/ivFotoBusc"
+            android:id="@+id/ivFotoEl"
             android:layout_width="196dp"
             android:layout_height="171dp"
             android:layout_gravity="center"
