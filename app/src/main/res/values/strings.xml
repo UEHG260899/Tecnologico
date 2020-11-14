@@ -63,4 +63,8 @@
     <string name="alumno">Uriel Enrique Hernández González</string>
     <string name="fecha">18 de Noviembre de 2020</string>
 
+
+    <!--Dialogo para los fragmentos con modal-->
+    <string name="info">Nuevo Alumno</string>
+
 </resources>

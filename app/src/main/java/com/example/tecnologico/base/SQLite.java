@@ -50,7 +50,7 @@ public class SQLite {
 
     //Método que retorna los alumnos
     public Cursor getRegistros(String status){
-        return database.rawQuery("SELECT * FROM ALUMNOS WHERE STATUS = " + status, null);
+        return database.rawQuery("SELECT * FROM ALUMNOS WHERE STATUS = '" + status + "'", null);
     }
 
     //Métodos que retorna los datos de los alumnos
