@@ -134,8 +134,8 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
                             n = cursor.getString(1);
                             e = cursor.getString(2);
                             s = cursor.getString(3);
-                            f = cursor.getString(4);
-                            c = cursor.getString(5);
+                            c = cursor.getString(4);
+                            f = cursor.getString(5);
                             est = cursor.getString(6);
                             img = cursor.getString(7);
                         }while(cursor.moveToNext());
