@@ -166,6 +166,10 @@ public class SQLite {
         return database.delete("ALUMNOS", "NOCTRL = "+ noctrl, null);
     }
 
+    public int eliminarAct(int noctrl){
+        return database.delete("ALUMNOS", "NOCTRL = "+ noctrl, null);
+    }
+
 
 
 }

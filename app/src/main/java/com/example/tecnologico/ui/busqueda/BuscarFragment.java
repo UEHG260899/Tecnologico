@@ -109,36 +109,37 @@ public class BuscarFragment extends Fragment implements View.OnClickListener{
             case R.id.btnBuscarb:
                 if(etNoctrl.getText().toString().isEmpty()){
                     Toast.makeText(getContext(), "Favor de introducir un criterio de busqueda", Toast.LENGTH_LONG).show();
-                }
-
-                sqLite.abrirBase();
-                idp = Integer.parseInt(etNoctrl.getText().toString());
-                if(sqLite.getValor(idp).getCount() == 1){
-                    Cursor cursor = sqLite.getValor(idp);
-                    btnBusca.setEnabled(false);
-                    etNoctrl.setEnabled(false);
-                    if(cursor.moveToFirst()){
-                        do{
-                            noctrl = etNoctrl.getText().toString();
-                            n = cursor.getString(1);
-                            e = cursor.getString(2);
-                            s = cursor.getString(3);
-                            c = cursor.getString(4);
-                            f = cursor.getString(5);
-                            est = cursor.getString(6);
-                            img = cursor.getString(7);
-                        }while (cursor.moveToNext());
-                    }
-
-                    tvSexo.setText("Sexo: " + s);
-                    tvCarrera.setText("Carrera: " + c);
-                    tvStatus.setText("Estatus: " + est);
-                    tvFecha.setText("Fecha de Inscripción: " + f);
-                    tvNombre.setText("Nombre del Alumno: " + n);
-                    tvEdad.setText("Edad: " + e);
-                    cargaImagen(img, ivFoto);
                 }else{
-                    Toast.makeText(getContext(), "No hay registros que coincidan con los criterios de busqueda", Toast.LENGTH_LONG).show();
+                    sqLite.abrirBase();
+                    idp = Integer.parseInt(etNoctrl.getText().toString());
+                    if(sqLite.getValor(idp).getCount() == 1){
+                        Cursor cursor = sqLite.getValor(idp);
+                        btnBusca.setEnabled(false);
+                        etNoctrl.setEnabled(false);
+                        if(cursor.moveToFirst()){
+                            do{
+                                noctrl = etNoctrl.getText().toString();
+                                n = cursor.getString(1);
+                                e = cursor.getString(2);
+                                s = cursor.getString(3);
+                                c = cursor.getString(4);
+                                f = cursor.getString(5);
+                                est = cursor.getString(6);
+                                img = cursor.getString(7);
+                            }while (cursor.moveToNext());
+                        }
+
+                        tvSexo.setText("Sexo: " + s);
+                        tvCarrera.setText("Carrera: " + c);
+                        tvStatus.setText("Estatus: " + est);
+                        tvFecha.setText("Fecha de Inscripción: " + f);
+                        tvNombre.setText("Nombre del Alumno: " + n);
+                        tvEdad.setText("Edad: " + e);
+                        cargaImagen(img, ivFoto);
+                        sqLite.cerrarBase();
+                    }else{
+                        Toast.makeText(getContext(), "No hay registros que coincidan con los criterios de busqueda", Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
 

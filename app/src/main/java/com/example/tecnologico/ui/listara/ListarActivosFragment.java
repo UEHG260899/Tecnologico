@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tecnologico.R;
 import com.example.tecnologico.base.SQLite;
+import com.example.tecnologico.ui.editar.EditarFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -73,10 +76,21 @@ public class ListarActivosFragment extends Fragment {
                 dialogo.setTitle("Alumno");
                 dialogo.setView(dialogView);
                 dialogo.setPositiveButton("Aceptar", null);
-                dialogo.setNegativeButton("Baja temporal", new DialogInterface.OnClickListener() {
+                dialogo.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         bajaAlumno(ids.get(position), sqLite, root);
+                    }
+                });
+                dialogo.setNeutralButton("Editar registro", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditarFragment editarFragment = new EditarFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("noctrl", ids.get(position)+"");
+                        editarFragment.setArguments(bundle);
+                        FragmentManager manager = getFragmentManager();
+                        manager.beginTransaction().replace(R.id.nav_host_fragment, editarFragment, editarFragment.getTag()).commit();
                     }
                 });
                 dialogo.show();
@@ -89,14 +103,18 @@ public class ListarActivosFragment extends Fragment {
     }
 
     private void bajaAlumno(int noctrl, SQLite sqLite, View root){
-        String resultado = sqLite.updateStatus(noctrl);
-        Toast.makeText(getContext(), resultado, Toast.LENGTH_LONG).show();
-        ListView list = root.findViewById(R.id.lvListaAct);
-        Cursor cursor = sqLite.getRegistros("Activo");
-        registros = sqLite.getAlumnos(cursor);
-        imagenes = sqLite.getImagenes(cursor);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, registros);
-        list.setAdapter(adapter);
+        int resultado = sqLite.eliminarAct(noctrl);
+        if(resultado == 1){
+            Toast.makeText(getContext(), "Alumno eliminado de manera exitosa", Toast.LENGTH_LONG).show();
+            ListView list = root.findViewById(R.id.lvListaAct);
+            Cursor cursor = sqLite.getRegistros("Activo");
+            registros = sqLite.getAlumnos(cursor);
+            imagenes = sqLite.getImagenes(cursor);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, registros);
+            list.setAdapter(adapter);
+        }else{
+            Toast.makeText(getContext(), "Ha ocurrido un error al eliminar el registro", Toast.LENGTH_LONG).show();
+        }
     }
 
 

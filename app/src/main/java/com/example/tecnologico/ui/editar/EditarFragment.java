@@ -67,10 +67,16 @@ public class EditarFragment extends Fragment implements View.OnClickListener, Ad
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_editar, container, false);
+        Bundle bundle = this.getArguments();
+        if(bundle == null){
+            sqLite = new SQLite(getContext());
+            componentes(root);
+        }else{
+            sqLite = new SQLite(getContext());
+            componentes(root);
+            etNoctrl.setText(bundle.getString("noctrl"));
+        }
 
-        sqLite = new SQLite(getContext());
-
-        componentes(root);
         return root;
     }
 
@@ -161,40 +167,42 @@ public class EditarFragment extends Fragment implements View.OnClickListener, Ad
                 if (etNoctrl.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Favor de ontroducir un criterio de busqueda", Toast.LENGTH_LONG).show();
                     bnd = 0;
-                }
+                }else{
+                    sqLite.abrirBase();
 
-                sqLite.abrirBase();
+                    idp = Integer.parseInt(etNoctrl.getText().toString());
+                    if (sqLite.getValor(idp).getCount() == 1) {
+                        Cursor cursor = sqLite.getValor(idp);
+                        btnBuscar.setEnabled(false);
+                        etNoctrl.setEnabled(false);
+                        if (cursor.moveToFirst()) {
+                            do {
+                                etNombre.setText(cursor.getString(1));
+                                etEdad.setText(cursor.getString(2));
+                                s = cursor.getString(3);
+                                car = cursor.getString(4);
+                                etFecha.setText(cursor.getString(5));
+                                est = cursor.getString(6);
+                                img = cursor.getString(7);
+                            } while (cursor.moveToNext());
+                        }
 
-                idp = Integer.parseInt(etNoctrl.getText().toString());
-                if (sqLite.getValor(idp).getCount() == 1) {
-                    Cursor cursor = sqLite.getValor(idp);
-                    btnBuscar.setEnabled(false);
-                    etNoctrl.setEnabled(false);
-                    if (cursor.moveToFirst()) {
-                        do {
-                            etNombre.setText(cursor.getString(1));
-                            etEdad.setText(cursor.getString(2));
-                            s = cursor.getString(3);
-                            car = cursor.getString(4);
-                            etFecha.setText(cursor.getString(5));
-                            est = cursor.getString(6);
-                            img = cursor.getString(7);
-                        } while (cursor.moveToNext());
+                        etNoctrl.setEnabled(false);
+                        btnBuscar.setEnabled(false);
+                        cargaImagen(img, ivFoto);
+                        spSexo.setSelection(sexoAdapter.getPosition(s));
+                        spCarrera.setSelection(carreraAdapter.getPosition(car));
+                        spStatus.setSelection(statusAdapter.getPosition(est));
+
+                        bnd = 1;
+                    } else {
+                        Toast.makeText(getContext(), "No se han encontrado coincidencias", Toast.LENGTH_LONG).show();
                     }
 
-                    etNoctrl.setEnabled(false);
-                    btnBuscar.setEnabled(false);
-                    cargaImagen(img, ivFoto);
-                    spSexo.setSelection(sexoAdapter.getPosition(s));
-                    spCarrera.setSelection(carreraAdapter.getPosition(car));
-                    spStatus.setSelection(statusAdapter.getPosition(est));
-
-                    bnd = 1;
-                } else {
-                    Toast.makeText(getContext(), "No se han encontrado coincidencias", Toast.LENGTH_LONG).show();
+                    sqLite.cerrarBase();
                 }
 
-                sqLite.cerrarBase();
+
                 break;
             case R.id.btnFechaed:
                 c = Calendar.getInstance();

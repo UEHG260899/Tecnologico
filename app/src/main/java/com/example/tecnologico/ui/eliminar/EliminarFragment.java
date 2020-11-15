@@ -36,7 +36,7 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
     private ImageView ivFoto;
     private EliminarViewModel mViewModel;
 
-    public static String noctrl, n, e, s, f, c , est, img;
+    public static String noctrl, n, e, s, f, c, est, img;
     static int bnd = 0, idp;
     public SQLite sqLite;
 
@@ -61,14 +61,14 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
         // TODO: Use the ViewModel
     }
 
-    private void componentes(View root){
+    private void componentes(View root) {
         botonesComponentes(root);
         editTextComponentes(root);
         tvComponentes(root);
     }
 
 
-    private void botonesComponentes(View root){
+    private void botonesComponentes(View root) {
         btnBaja = root.findViewById(R.id.btnBaja);
         btnEliminar = root.findViewById(R.id.btnEliminar);
         btnBuscar = root.findViewById(R.id.btnBuscarel);
@@ -81,11 +81,11 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
         btnBaja.setOnClickListener(this);
     }
 
-    private void editTextComponentes(View root){
+    private void editTextComponentes(View root) {
         etNoctrl = root.findViewById(R.id.tIETNoctrlel);
     }
 
-    private void tvComponentes(View root){
+    private void tvComponentes(View root) {
         tvCarrera = root.findViewById(R.id.tvCarrerael);
         tvEdad = root.findViewById(R.id.tvEdadel);
         tvEstatus = root.findViewById(R.id.tvStatusel);
@@ -94,7 +94,7 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
         tvSexo = root.findViewById(R.id.tvSexoel);
     }
 
-    private void limpiar(){
+    private void limpiar() {
         etNoctrl.setText("");
         tvSexo.setText("Sexo: ");
         tvCarrera.setText("Carrera: ");
@@ -111,54 +111,54 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnLimpiarel:
                 limpiar();
                 break;
             case R.id.btnBuscarel:
-                if(etNoctrl.getText().toString().isEmpty()){
+                if (etNoctrl.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Favor de introducir un criterio de busqueda", Toast.LENGTH_LONG).show();
                     bnd = 0;
-                }
+                } else {
+                    sqLite.abrirBase();
 
-                sqLite.abrirBase();
+                    idp = Integer.parseInt(etNoctrl.getText().toString());
+                    if (sqLite.getValor(idp).getCount() == 1) {
+                        Cursor cursor = sqLite.getValor(idp);
+                        btnBuscar.setEnabled(false);
+                        etNoctrl.setEnabled(false);
+                        if (cursor.moveToFirst()) {
+                            do {
+                                noctrl = etNoctrl.getText().toString();
+                                n = cursor.getString(1);
+                                e = cursor.getString(2);
+                                s = cursor.getString(3);
+                                c = cursor.getString(4);
+                                f = cursor.getString(5);
+                                est = cursor.getString(6);
+                                img = cursor.getString(7);
+                            } while (cursor.moveToNext());
+                        }
 
-                idp = Integer.parseInt(etNoctrl.getText().toString());
-                if(sqLite.getValor(idp).getCount() == 1){
-                    Cursor cursor = sqLite.getValor(idp);
-                    btnBuscar.setEnabled(false);
-                    etNoctrl.setEnabled(false);
-                    if(cursor.moveToFirst()){
-                        do{
-                            noctrl = etNoctrl.getText().toString();
-                            n = cursor.getString(1);
-                            e = cursor.getString(2);
-                            s = cursor.getString(3);
-                            c = cursor.getString(4);
-                            f = cursor.getString(5);
-                            est = cursor.getString(6);
-                            img = cursor.getString(7);
-                        }while(cursor.moveToNext());
+                        tvSexo.setText("Sexo: " + s);
+                        tvCarrera.setText("Carrera: " + c);
+                        tvEstatus.setText("Estatus: " + est);
+                        tvFecha.setText("Fecha de Inscripción: " + f);
+                        tvNombre.setText("Nombre del Alumno: " + n);
+                        tvEdad.setText("Edad: " + e);
+                        cargaImagen(img, ivFoto);
+
+                        bnd = 1;
+                    } else {
+                        Toast.makeText(getContext(), "No hay registros con ese numero de control", Toast.LENGTH_LONG).show();
+                        bnd = 0;
                     }
 
-                    tvSexo.setText("Sexo: " + s);
-                    tvCarrera.setText("Carrera: " + c);
-                    tvEstatus.setText("Estatus: " + est);
-                    tvFecha.setText("Fecha de Inscripción: " + f);
-                    tvNombre.setText("Nombre del Alumno: " + n);
-                    tvEdad.setText("Edad: " + e);
-                    cargaImagen(img, ivFoto);
-
-                    bnd = 1;
-                }else{
-                    Toast.makeText(getContext(), "No hay registros con ese numero de control", Toast.LENGTH_LONG).show();
-                    bnd = 0;
+                    sqLite.cerrarBase();
                 }
-
-                sqLite.cerrarBase();
                 break;
             case R.id.btnEliminar:
-                if(bnd == 1){
+                if (bnd == 1) {
                     View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_alumno, null);
                     ((TextView) dialogView.findViewById(R.id.tvNuevoAlumno)).setText("¿Desea eliminar el registro de forma permanente?\n" +
                             "NOCTROL: [" + noctrl + "]\n" +
@@ -190,13 +190,13 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
                     });
                     dialog.show();
                     bnd = 0;
-                }else{
+                } else {
                     Toast.makeText(getContext(), "Favor de ingresar un criterio de busqueda", Toast.LENGTH_LONG);
                     bnd = 0;
                 }
                 break;
             case R.id.btnBaja:
-                if(bnd == 1){
+                if (bnd == 1) {
                     View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_alumno, null);
                     ((TextView) dialogView.findViewById(R.id.tvNuevoAlumno)).setText("¿Desea dar de baja al alumno?\n" +
                             "NOCTROL: [" + noctrl + "]\n" +
@@ -228,7 +228,7 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
                     });
                     dialog.show();
 
-                }else{
+                } else {
                     Toast.makeText(getContext(), "Favor de ingresar un criterio de busqueda válido", Toast.LENGTH_LONG).show();
                 }
 
@@ -237,26 +237,26 @@ public class EliminarFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void aceptar(){
+    private void aceptar() {
         sqLite.abrirBase();
         sqLite.eliminar(etNoctrl.getText());
         Toast.makeText(getContext(), "Registro eliminado", Toast.LENGTH_LONG).show();
         sqLite.cerrarBase();
     }
 
-    private void bajaAlumno(int noctrl){
+    private void bajaAlumno(int noctrl) {
         sqLite.abrirBase();
         String resultado = sqLite.updateStatus(noctrl);
         Toast.makeText(getContext(), resultado, Toast.LENGTH_LONG).show();
         sqLite.cerrarBase();
     }
 
-    public void cargaImagen(String imagen, ImageView iv){
+    public void cargaImagen(String imagen, ImageView iv) {
         try {
             File filePhoto = new File(imagen);
             Uri photUri = FileProvider.getUriForFile(getContext(), "com.example.tecnologico", filePhoto);
             iv.setImageURI(photUri);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(getContext(), "Ocurrio un error en la carga de la imagen", Toast.LENGTH_LONG).show();
             Log.d("Carga Imagen", "Error al cargar la imagen" + imagen + "\n Mensaje" + ex.getMessage() + "\n Causa: " + ex.getCause());
         }
